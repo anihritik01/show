@@ -54,29 +54,6 @@ class LinkedList:
         prev.next = temp.next
         temp = None
 
-    def delete(self, value):
-
-        if self.__node is None:
-            return False  # or maybe raise
-
-        node = self.__node
-        if node.getValue() == value:
-            if node.next is not None:
-                self.__node = node.next
-            else:
-                self.__node = None
-            return True
-
-        while node.next is not None:
-            if node.next.getValue() == value:
-                newNext = node.next.next
-                if newNext is not None:
-                    node.next = newNext
-                else:
-                    node.next = None
-                return True
-        return False  # or maybe raise
-
     def __middle(self, start, last):
         if start is None:
             return None
@@ -212,8 +189,10 @@ class Showroom:
     def search_vehicles(self, car_detail):
         if self.room.binary_search(car_detail):
             print("Car is available")
+            return True
         else:
             print("Not available")
+            return False
 
 
 if __name__ == '__main__':
@@ -231,9 +210,9 @@ if __name__ == '__main__':
     showroom.vehicles_entry(car3)
     showroom.vehicles_entry(car4)
     showroom.vehicles_entry(car5)
-    showroom.show_all_vehicles()
 
     while True:
+        showroom.show_all_vehicles()
         print("Which car you want to buy (Enter BRAND name)")
         choice = input().upper()
         if choice == "BMW":
@@ -251,12 +230,17 @@ if __name__ == '__main__':
         else:
             print("car is missing")
             exit(0)
-        print(cars)
-        print("Go to Cash counter and pay", cars.price)
-        money = int(input("Pay Money: "))
-        if money != cars.price:
-            print("Money is not sufficient, Please buy another car")
+        if showroom.search_vehicles(cars):
+            print(cars)
+            print("Go to Cash counter and pay", cars.price)
+            money = int(input("Pay Money: "))
+            if money != cars.price:
+                print("Money is not sufficient, Please buy another car")
+            else:
+                showroom.buy_vehicles(cars)
+                print("Congratulations, Now you have a new car")
+            ans = input("You want to buy more cars enter 'Y'")
+            if not ans.upper() == 'Y':
+                break
         else:
-            showroom.buy_vehicles(cars)
-            print("Congratulations, Now you have a new car")
-            break
+            exit(0)
