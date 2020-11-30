@@ -220,16 +220,43 @@ if __name__ == '__main__':
     car = Showroom.Cars("BMW", "red", "A11", True)
     car1 = Showroom.Cars("Audi", "black", "E88", True)
     car2 = Showroom.Cars("Tata", "green", "A", True)
+    car3 = Showroom.Cars("HONDA", "Orange", "A11", True)
+    car4 = Showroom.Cars("TOYOTA", "yellow", "E88", True)
+    car5 = Showroom.Cars("VW", "pink", "A", True)
 
     showroom = Showroom()
     showroom.vehicles_entry(car)
     showroom.vehicles_entry(car1)
     showroom.vehicles_entry(car2)
+    showroom.vehicles_entry(car3)
+    showroom.vehicles_entry(car4)
+    showroom.vehicles_entry(car5)
     showroom.show_all_vehicles()
 
-    showroom.search_vehicles(car2)
-    print()
-    showroom.buy_vehicles(car2)
-    showroom.show_all_vehicles()
-    # print()
-
+    while True:
+        print("Which car you want to buy (Enter BRAND name)")
+        choice = input().upper()
+        if choice == "BMW":
+            cars = car
+        elif choice == "AUDI":
+            cars = car1
+        elif choice == "TATA":
+            cars = car2
+        elif choice == "HONDA":
+            cars = car3
+        elif choice == "TOYOTA":
+            cars = car4
+        elif choice == "VW":
+            cars = car5
+        else:
+            print("car is missing")
+            exit(0)
+        print(cars)
+        print("Go to Cash counter and pay", cars.price)
+        money = int(input("Pay Money: "))
+        if money != cars.price:
+            print("Money is not sufficient, Please buy another car")
+        else:
+            showroom.buy_vehicles(cars)
+            print("Congratulations, Now you have a new car")
+            break
